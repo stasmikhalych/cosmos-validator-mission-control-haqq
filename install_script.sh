@@ -11,9 +11,17 @@ echo "----------- Installing grafana -----------"
 
 sudo -S apt-get install -y adduser libfontconfig1
 
-wget https://dl.grafana.com/oss/release/grafana_6.7.2_amd64.deb
+sudo apt-get install -y apt-transport-https
 
-sudo -S dpkg -i grafana_6.7.2_amd64.deb
+sudo apt-get install -y software-properties-common wget
+
+sudo wget -q -O /usr/share/keyrings/grafana.key https://packages.grafana.com/gpg.key
+
+echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+
+sudo apt-get update
+
+sudo apt-get install grafana-enterprise
 
 echo "------ Starting grafana server using systemd --------"
 
